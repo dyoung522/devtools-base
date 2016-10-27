@@ -12,69 +12,57 @@ module RunTest
     end
 
     describe OptParse do
-      let (:options) { OptParse.parse([], true) }
+      let (:options) { RunTest::OptParse.parse([], true) }
 
-      before :each do
-        @option = {}
+      it "should have a valid --basedir command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--basedir foo), true) }.not_to raise_error
+        expect(my_options.basedir).to eq("foo")
+        expect(options.basedir).not_to be nil
       end
 
-      it "should have a valid --build command" do
-        expect { OptParse.parse(%w(--build), true) }.not_to raise_error
-        expect(OptParse.parse(%w(--build), true).build).to be true # can be set
-        expect(OptParse.parse(%w(--no-build), true).build).to be false # can be unset
-        expect(options.build).to be false # defaults to false
+      it "should have a valid --changed command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--changed), true) }.not_to raise_error
+        expect(my_options.changed).to be true # can be set
+        expect(options.changed).to be false # defaults to false
       end
 
-      it "should have a valid --build-cmd command" do
-        expect { @option = OptParse.parse(%w(--build-cmd foo), true) }.not_to raise_error
-        expect(@option.cmd[:build]).to eq("foo") # can be set
-        expect(options.cmd[:build]).not_to be nil
+      it "should have a valid --jest command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--jest), true) }.not_to raise_error
+        expect(my_options.jest).to be true # can be set
+        expect(RunTest::OptParse.parse(%w(--no-jest), true).jest).to be false # can be unset
+        expect(options.jest).to be true # defaults to false
       end
 
-      it "should have a valid --dry-run command" do
-        expect { OptParse.parse(%w(--dry-run), true) }.not_to raise_error
-        expect(OptParse.parse(%w(--dry-run), true).dryrun).to be true # can be set
-        expect(options.dryrun).to be false # defaults to false
+      it "should have a valid --mocha command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--mocha), true) }.not_to raise_error
+        expect(my_options.mocha).to be true # can be set
+        expect(RunTest::OptParse.parse(%w(--no-mocha), true).mocha).to be false # can be unset
+        expect(options.mocha).to be true # defaults to false
       end
 
-      it "should have a valid --package command" do
-        expect { OptParse.parse(%w(--package), true) }.not_to raise_error
-        expect(OptParse.parse(%w(--package), true).package).to be true # can be set
-        expect(OptParse.parse(%w(--no-package), true).package).to be false # can be unset
-        expect(options.package).to be false # defaults to false
+      it "should have a valid --diff-cmd command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--diff-cmd foo), true) }.not_to raise_error
+        expect(my_options.cmd[:git][:diff]).to eq("foo")
+        expect(options.cmd[:git][:diff]).not_to be nil
       end
 
-      it "should have a valid --package-cmd command" do
-        expect { @option = OptParse.parse(%w(--package-cmd foo), true) }.not_to raise_error
-        expect(@option.cmd[:package]).to eq("foo") # can be set
-        expect(options.cmd[:package]).not_to be nil
+      it "should have a valid --jest-cmd command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--jest-cmd foo), true) }.not_to raise_error
+        expect(my_options.cmd[:jest]).to eq("foo")
+        expect(options.cmd[:jest]).not_to be nil
       end
 
-      it "should have a valid --run command" do
-        expect { OptParse.parse(%w(--run), true) }.not_to raise_error
-        expect(OptParse.parse(%w(--run), true).run).to be true # can be set
-        expect(OptParse.parse(%w(--no-run), true).run).to be false # can be unset
-        expect(options.run).to be true # defaults to true
-      end
-
-      it "should have a valid --run-cmd command" do
-        expect { @option = OptParse.parse(%w(--run-cmd foo), true) }.not_to raise_error
-        expect(@option.cmd[:run]).to eq("foo") # can be set
-        expect(options.cmd[:run]).not_to be nil
-      end
-
-      it "should have a valid --help command" do
-        expect { OptParse.parse(%w(--help), true) }.not_to raise_error
-      end
-
-      it "should have a valid --verbose command" do
-        expect { @option = OptParse.parse(%w(--verbose --verbose), true) }.not_to raise_error
-        expect(@option.verbose).to eq(2)
-        expect(options.verbose > 0).to be true
-      end
-
-      it "should have a valid --version command" do
-        expect { OptParse.parse(%w(--version), true) }.not_to raise_error
+      it "should have a valid --mocha-cmd command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--mocha-cmd foo), true) }.not_to raise_error
+        expect(my_options.cmd[:mocha]).to eq("foo")
+        expect(options.cmd[:mocha]).not_to be nil
       end
     end
   end
