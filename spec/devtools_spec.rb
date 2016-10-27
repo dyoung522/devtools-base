@@ -1,11 +1,12 @@
 require "spec_helper"
+require "devtools"
 
-describe Devtools do
+describe DevTools do
   it "has a version number" do
-    expect(Devtools::VERSION).not_to be nil
+    expect(DevTools::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "has a program name" do
+    expect(DevTools::PROGRAM).not_to be nil
   end
 end

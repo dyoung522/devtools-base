@@ -6,7 +6,7 @@ module RunTest
     #
     # Return a structure describing the options.
     #
-    def self.parse(args)
+    def self.parse(args, unit_testing=false)
       # The options specified on the command line will be collected in *options*.
       # We set default values here.
       options         = OpenStruct.new
@@ -84,14 +84,18 @@ module RunTest
         opts.separator "Common options:"
 
         opts.on("-h", "--help", "Show this message") do
-          puts version + "\n"
-          puts opts
-          exit
+          unless unit_testing
+            puts version + "\n"
+            puts opts
+            exit
+          end
         end
 
         opts.on("-V", "--version", "Show version") do
-          puts version
-          exit
+          unless unit_testing
+            puts version
+            exit
+          end
         end
 
       end.parse!(args)
