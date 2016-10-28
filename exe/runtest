@@ -5,11 +5,12 @@ require "runtest"
 require "find"
 
 module RunTest
-  opts  = RunTest::OptParse.parse(ARGV)
   files = { jest: [], mocha: [], diff: [] }
 
-  if opts.changed
-    files[:diff] = %x(#{opts.cmd[:git][:diff]}).split("\n").map { |f| "#{File.basename(f, ".js")}-spec" }
+  RunTest::OptParse.parse(ARGV)
+
+  if Options.changed
+    files[:diff] = %x(#{Options.commands.diff}).split("\n").map { |f| "#{File.basename(f, ".js")}-spec" }
     DevTools::Utils.die "No modified spec files found" if files[:diff].empty? && ARGV.empty?
   end
 
@@ -17,9 +18,9 @@ module RunTest
     [files[:diff], ARGV].flatten.compact.each do |arg|
       found = false
 
-      puts "looking for tests matching \"#{arg}\"" if opts.verbose > 1
+      puts "looking for tests matching \"#{arg}\"" if Options.verbose > 1
 
-      Find.find(opts.basedir) do |path|
+      Find.find(Options.basedir) do |path|
         if FileTest.directory?(path)
           if File.basename(path)[0] == ?.
             Find.prune # Don't look any further into this directory.
@@ -38,17 +39,17 @@ module RunTest
     end
 
     [:jest, :mocha].each do |suite|
-      next unless opts.send(suite)
+      next unless Options[suite]
 
       if files[suite].length > 0
-        if opts.verbose > 2
+        if Options.verbose > 2
           puts "\nRunning #{suite.capitalize} on..."
           puts "    #{files[suite].join("\n    ")}\n\n"
         else
-          puts "\nRunning #{files[suite].length} #{suite.capitalize} test(s)" if opts.verbose > 0
+          puts "\nRunning #{files[suite].length} #{suite.capitalize} test(s)" if Options.verbose > 0
         end
 
-        system "#{opts.cmd[suite]} #{files[suite].join(" ")}"
+        system "#{Options.commands[suite]} #{files[suite].join(" ")}"
       end
     end
 
@@ -56,8 +57,8 @@ module RunTest
 
   else
     [:jest, :mocha].each do |suite|
-      if opts.send(suite)
-        puts "Running full #{suite.capitalize} test suite" if opts.verbose > 0
+      if Options[suite]
+        puts "Running full #{suite.capitalize} test suite" if Options.verbose > 0
         system "npm run test:#{suite}"
       end
     end

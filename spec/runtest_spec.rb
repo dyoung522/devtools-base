@@ -47,22 +47,22 @@ module RunTest
       it "should have a valid --diff-cmd command" do
         my_options = nil
         expect { my_options = RunTest::OptParse.parse(%w(--diff-cmd foo), true) }.not_to raise_error
-        expect(my_options.cmd[:git][:diff]).to eq("foo")
-        expect(options.cmd[:git][:diff]).not_to be nil
+        expect(my_options.commands.diff).to eq("foo")
+        expect(options.commands.diff).not_to be nil
       end
 
       it "should have a valid --jest-cmd command" do
         my_options = nil
         expect { my_options = RunTest::OptParse.parse(%w(--jest-cmd foo), true) }.not_to raise_error
-        expect(my_options.cmd[:jest]).to eq("foo")
-        expect(options.cmd[:jest]).not_to be nil
+        expect(my_options.commands.jest).to eq("foo")
+        expect(options.commands.jest).not_to be nil
       end
 
       it "should have a valid --mocha-cmd command" do
         my_options = nil
         expect { my_options = RunTest::OptParse.parse(%w(--mocha-cmd foo), true) }.not_to raise_error
-        expect(my_options.cmd[:mocha]).to eq("foo")
-        expect(options.cmd[:mocha]).not_to be nil
+        expect(my_options.commands.mocha).to eq("foo")
+        expect(options.commands.mocha).not_to be nil
       end
     end
   end

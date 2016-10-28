@@ -11,17 +11,22 @@ module DevTools
       expect(DevTools::PROGRAM).not_to be nil
     end
 
-    context Options do
-      let (:options_parser) { DevTools::Options.new("test", "0.0.0", true) }
+    context OptParse do
+      let (:options_parser) { DevTools::OptParse.new({ name: "test", version: "0.0.0" }, true) }
+
+      it "should have a valid --config command" do
+        expect { options_parser.parser.parse(%w(--config spec/spec_config.yml)) }.not_to raise_error
+        expect(Options.test_config).to be true
+      end
 
       it "should have a valid --help command" do
         expect { options_parser.parser.parse(%w(--help)) }.not_to raise_error
       end
 
       it "should have a valid --verbose command" do
+        expect(Options.verbose).to eq(0)
         expect { options_parser.parser.parse(%w(--verbose --verbose)) }.not_to raise_error
-        expect(options_parser.options.verbose).to eq(2)
-        expect(options_parser.options.verbose > 0).to be true
+        expect(Options.verbose).to eq(2)
       end
 
       it "should have a valid --version command" do
