@@ -58,11 +58,25 @@ module RunTest
         expect(options.commands.jest).not_to be nil
       end
 
+      it "should have a valid --jest-full-cmd command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--jest-full-cmd foo), true) }.not_to raise_error
+        expect(my_options.commands.jest_full).to eq("foo")
+        expect(options.commands.jest_full).not_to be nil
+      end
+
       it "should have a valid --mocha-cmd command" do
         my_options = nil
         expect { my_options = RunTest::OptParse.parse(%w(--mocha-cmd foo), true) }.not_to raise_error
         expect(my_options.commands.mocha).to eq("foo")
         expect(options.commands.mocha).not_to be nil
+      end
+
+      it "should have a valid --mocha-full-cmd command" do
+        my_options = nil
+        expect { my_options = RunTest::OptParse.parse(%w(--mocha-full-cmd foo), true) }.not_to raise_error
+        expect(my_options.commands.mocha_full).to eq("foo")
+        expect(options.commands.mocha_full).not_to be nil
       end
     end
   end

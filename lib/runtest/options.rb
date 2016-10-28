@@ -1,5 +1,3 @@
-require 'ostruct'
-
 module RunTest
   class OptParse
     #
@@ -8,17 +6,26 @@ module RunTest
     def self.parse(args, unit_testing=false)
       # The Options specified on the command line will be collected in *Options*.
       # We set default values here.
-      parser = DevTools::OptParse.new({ name: RunTest::PROGRAM_NAME, version: RunTest::VERSION }, unit_testing).parser
+      opt_parse = DevTools::OptParse.new({ name: RunTest::PROGRAM_NAME, version: RunTest::VERSION }, unit_testing)
 
-      Options.basedir        ||= "src/js"
-      Options.changed        ||= false
-      Options.commands       ||= OpenStruct.new
-      Options.commands.diff  ||= "git diff --name-only develop src/js | egrep \".js$\""
-      Options.commands.jest  ||= "$(npm bin)/jest"
-      Options.commands.mocha ||= "$(npm bin)/mocha --require src/js/util/test-dom.js --compilers js:babel-core/register"
-      Options.jest           ||= true
-      Options.mocha          ||= true
-      Options.verbose        ||= 0
+      opt_parse.default_options(Options, {
+        basedir:  "src/js",
+        changed:  false,
+        commands: Config::Options.new,
+        jest:     true,
+        mocha:    true,
+        verbose:  0,
+      })
+
+      opt_parse.default_options(Options.commands, {
+        diff:  "git diff --name-only develop src/js | egrep \".js$\"",
+        jest:  "$(npm bin)/jest",
+        jest_full: "npm run test:jest",
+        mocha: "$(npm bin)/mocha --require src/js/util/test-dom.js --compilers js:babel-core/register",
+        mocha_full: "npm run test:mocha"
+      })
+
+      parser = opt_parse.parser
 
       parser.banner = "Usage: #{DevTools::PROGRAM} [OPTIONS] [PATTERN]"
       parser.banner += "\n\nWhere [PATTERN] is any full or partial filename."
@@ -64,8 +71,16 @@ module RunTest
         Options.commands.jest = cmd
       end
 
+      parser.on("--jest-full-cmd CMD", "Overwrite Jest full-suite command: '#{Options.commands.jest_full}'") do |cmd|
+        Options.commands.jest_full = cmd
+      end
+
       parser.on("--mocha-cmd CMD", "Overwrite Mocha command: '#{Options.commands.mocha}'") do |cmd|
         Options.commands.mocha = cmd
+      end
+
+      parser.on("--mocha-full-cmd CMD", "Overwrite Mocha command: '#{Options.commands.mocha_full}'") do |cmd|
+        Options.commands.mocha_full = cmd
       end
 
       parser.separator ""

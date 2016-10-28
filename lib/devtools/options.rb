@@ -17,7 +17,7 @@ module DevTools
       end
 
       Config.load_and_set_settings unit_testing ? "" : program_files
-      Options.verbose = 0
+      default_options(Options, { verbose: 0 })
 
       @parser  ||= common_options unit_testing
       @version ||= sprintf "%s - v%s\n", opts[:name] || DevTools::PROGRAM, opts[:version] || DevTools::VERSION
@@ -39,6 +39,11 @@ module DevTools
           Options.reload!
         end
 
+        # dry-run switch
+        opts.on_tail("--dry-run", "Don't actually run commands") do
+          Options.dryrun = true
+        end
+
         # Verbose switch
         opts.on_tail("-q", "--quiet", "Run quietly") do
           Options.verbose = 0
@@ -56,5 +61,11 @@ module DevTools
         end
       end
     end
-  end # class Options
+
+    def default_options(options, opts)
+      opts.each do |key, value|
+        options[key] = value unless options.keys.include?(key)
+      end
+    end
+  end # class Option
 end # module DevTools

@@ -19,6 +19,12 @@ module DevTools
         expect(Options.test_config).to be true
       end
 
+      it "should have a valid --dryrun command" do
+        expect(Options.dryrun).to be_falsey
+        expect { options_parser.parser.parse(%w(--dry-run)) }.not_to raise_error
+        expect(Options.dryrun).to be true
+      end
+
       it "should have a valid --help command" do
         expect { options_parser.parser.parse(%w(--help)) }.not_to raise_error
       end

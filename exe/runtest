@@ -5,11 +5,19 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "devtools"
 require "runtest"
 require "find"
+require "pp"
 
 module RunTest
+  def self.run_command(command)
+    puts "COMMAND> #{command}" if Options.verbose >= 4
+    system command unless Options.dryrun
+  end
+
   files = { jest: [], mocha: [], diff: [] }
 
   RunTest::OptParse.parse(ARGV)
+
+  pp Options if Options.verbose >= 5
 
   if Options.changed
     files[:diff] = %x(#{Options.commands.diff}).split("\n").map { |f| "#{File.basename(f, ".js")}-spec" }
@@ -51,7 +59,7 @@ module RunTest
           puts "\nRunning #{files[suite].length} #{suite.capitalize} test(s)" if Options.verbose > 0
         end
 
-        system "#{Options.commands[suite]} #{files[suite].join(" ")}"
+        run_command "#{Options.commands[suite]} #{files[suite].join(" ")}"
       end
     end
 
@@ -61,8 +69,9 @@ module RunTest
     [:jest, :mocha].each do |suite|
       if Options[suite]
         puts "Running full #{suite.capitalize} test suite" if Options.verbose > 0
-        system "npm run test:#{suite}"
+        run_command Options.commands[suite.to_s + "_full"]
       end
     end
   end
 end # module RunTest
+
