@@ -1,5 +1,3 @@
+require "devtools/options"
+require "devtools/utils"
 require "devtools/version"
-
-module Devtools
-  # Your code goes here...
-end
