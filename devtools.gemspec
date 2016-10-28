@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "devtools/version"
 
 Gem::Specification.new do |spec|
-  spec.name    = "DevTools"
+  spec.name    = "devtools"
   spec.version = DevTools::VERSION
   spec.authors = ["Donovan Young"]
   spec.email   = ["dyoung522@gmail.com"]
