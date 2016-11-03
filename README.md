@@ -1,38 +1,29 @@
 # DevTools
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/devtools`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+DevTools is a compilation of utilities created to make the development process easier.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'devtools'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install it from the command line
 
     $ gem install devtools
 
 ## Usage
 
-TODO: Write usage instructions here
+Once installed, this gem provides several, mostly independent, utilities
+
+- RunTest : This command line utility is a test suite runner, see `runtest --help` for more info
+- RunEnv  : Starts and manages a development environment *(still under development)*
 
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/devtools.
+Bug reports and pull requests are welcome on GitHub at https://github.com/dyoung522/devtools.
 
 
 ## License

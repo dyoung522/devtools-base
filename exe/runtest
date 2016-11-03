@@ -20,12 +20,15 @@ module RunTest
   pp Options if Options.verbose >= 5
 
   if Options.changed
-    files[:diff] = %x(#{Options.commands.diff}).split("\n").map { |f| "#{File.basename(f, ".js")}-spec" }
+    files[:diff] = %x(#{Options.commands.diff}).split("\n").collect do |f|
+      f =~ /-spec/ ? File.basename(f, ".js") : "#{File.basename(f, ".js")}-spec"
+    end.uniq.compact
+
     DevTools::Utils.die "No modified spec files found" if files[:diff].empty? && ARGV.empty?
   end
 
   if !files[:diff].empty? || ARGV.length > 0
-    [files[:diff], ARGV].flatten.compact.each do |arg|
+    [files[:diff], ARGV].flatten.compact.uniq.each do |arg|
       found = false
 
       puts "looking for tests matching \"#{arg}\"" if Options.verbose > 1
@@ -38,7 +41,7 @@ module RunTest
             next
           end
         else
-          if path =~ /__(spec|test)s?__\/.*#{arg}.*/
+          if path =~ /_*(spec|test)s?_*\/.*#{arg}.*/
             files[$1 =~ /test/ ? :jest : :mocha].push path
             found = true
           end

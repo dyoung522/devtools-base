@@ -20,7 +20,9 @@ module DevTools
       default_options(Options, { verbose: 0 })
 
       @parser  ||= common_options unit_testing
-      @version ||= sprintf "%s - v%s\n", opts[:name] || DevTools::PROGRAM, opts[:version] || DevTools::VERSION
+      @version ||= sprintf "%s v%s (%s v%s)\n",
+                           opts[:name] || DevTools::PROGRAM, opts[:version] || DevTools::VERSION,
+                           "DevTools", DevTools::VERSION
     end
 
     def common_options(unit_testing = false)
