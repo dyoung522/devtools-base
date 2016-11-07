@@ -1,3 +1,7 @@
+![Build Status](https://travis-ci.org/dyoung522/devtools.svg)
+![Code Climate](https://codeclimate.com/github/dyoung522/devtools/badges/gpa.svg)
+![Test Coverage](https://codeclimate.com/github/dyoung522/devtools/badges/coverage.svg)
+
 # DevTools
 
 DevTools is a compilation of utilities created to make the development process easier.

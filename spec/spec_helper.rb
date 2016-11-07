@@ -1,5 +1,8 @@
 $LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
 require "stringio"
+require "simplecov"
+
+SimpleCov.start
 
 def capture_stdout(&blk)
   old = $stdout
