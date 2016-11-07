@@ -1,3 +1,3 @@
 require "devtools"
-require "runtest/version"
+require "runtest/globals"
 require "runtest/options"
