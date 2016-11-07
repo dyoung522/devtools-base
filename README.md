@@ -12,8 +12,13 @@ Install it from the command line
 
 Once installed, this gem provides several, mostly independent, utilities
 
-- RunTest : This command line utility is a test suite runner, see `runtest --help` for more info
-- RunEnv  : Starts and manages a development environment *(still under development)*
+- `runtest` : Runs test suites with an optional search pattern
+- `jdiff` : Compares two git branches and shows a diff of JIRA stories
+
+Future Development
+
+- RunEnv  : Starts and manages a development environment
+- QA Queue (qaq) : polls git repos and displays a queue of stories ready for QA
 
 ## Development
 
