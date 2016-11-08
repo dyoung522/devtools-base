@@ -1,27 +1,32 @@
 module RunTest
   class OptParse
+    def self.default_options
+      {
+        basedir:  "src/js",
+        changed:  false,
+        commands: Config::Options.new,
+        jest:     true,
+        mocha:    true,
+        verbose:  0
+      }
+    end
+
     #
     # Return a structure describing the Options.
     #
     def self.parse(args, unit_testing=false)
       # The Options specified on the command line will be collected in *Options*.
       # We set default values here.
-      opt_parse = DevTools::OptParse.new({ name: RunTest::PROGRAM_NAME, version: RunTest::VERSION }, unit_testing)
-
-      opt_parse.default_options(Options, {
-        basedir:  "src/js",
-        changed:  false,
-        commands: Config::Options.new,
-        jest:     true,
-        mocha:    true,
-        verbose:  0,
-      })
+      opt_parse = DevTools::OptParse.new({ name:     PROGRAM_NAME,
+                                           version:  VERSION,
+                                           defaults: default_options,
+                                           testing:  unit_testing })
 
       opt_parse.default_options(Options.commands, {
-        diff:  "git diff --name-only develop src/js | egrep \".js$\"",
-        jest:  "$(npm bin)/jest",
-        jest_full: "npm run test:jest",
-        mocha: "$(npm bin)/mocha --require src/js/util/test-dom.js --compilers js:babel-core/register",
+        diff:       "git diff --name-only develop src/js | egrep \".js$\"",
+        jest:       "$(npm bin)/jest",
+        jest_full:  "npm run test:jest",
+        mocha:      "$(npm bin)/mocha --require src/js/util/test-dom.js --compilers js:babel-core/register",
         mocha_full: "npm run test:mocha"
       })
 

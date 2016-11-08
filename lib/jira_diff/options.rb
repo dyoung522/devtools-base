@@ -15,8 +15,10 @@ module JIRADiff
     end
 
     def self.parse(argv_opts = [], unit_testing = false)
-      opt_parse = DevTools::OptParse.new({ name: JIRADiff::PROGRAM_NAME, version: JIRADiff::VERSION }, unit_testing)
-      opt_parse.default_options(Options, default_options)
+      opt_parse = DevTools::OptParse.new({ name:     PROGRAM_NAME,
+                                           version:  VERSION,
+                                           testing:  unit_testing,
+                                           defaults: default_options })
 
       parser = opt_parse.parser
 
@@ -52,10 +54,6 @@ module JIRADiff
     end
 
     def self.validate_options(opts)
-      if opts.release && opts.release !~ /^v?(\d+\.)?(\d+\.)?(\*|\d+)/
-        raise RuntimeError, "Release version must follow semantic versioning"
-      end
-
       if opts.source.include?(opts.master)
         raise RuntimeError, "Source branches cannot include the master branch"
       end

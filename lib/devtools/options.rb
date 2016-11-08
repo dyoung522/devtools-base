@@ -7,7 +7,7 @@ module DevTools
   class OptParse
     attr_reader :parser, :version
 
-    def initialize(opts, unit_testing = false)
+    def initialize(opts)
       program_path  = DevTools::PROGRAM
       program_files = %W(~/.#{program_path} ./.#{program_path} ./#{program_path}.conf ./#{program_path}.rc)
 
@@ -16,10 +16,13 @@ module DevTools
         config.use_env    = true
       end
 
-      Config.load_and_set_settings unit_testing ? "" : program_files
-      default_options(Options, { verbose: 0 })
+      Config.load_and_set_settings opts[:testing] ? String.new : program_files
 
-      @parser  ||= common_options unit_testing
+      default_options(Options, opts[:defaults]) if opts[:defaults]
+
+      Options.verbose = 0 if Options.verbose.nil?
+
+      @parser  ||= common_options opts[:testing]
       @version ||= sprintf "%s v%s (%s v%s)\n",
                            opts[:name] || DevTools::PROGRAM, opts[:version] || DevTools::VERSION,
                            "DevTools", DevTools::VERSION
