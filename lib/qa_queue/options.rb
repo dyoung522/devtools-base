@@ -8,9 +8,9 @@ module QAqueue
     end
 
     def self.validate_options
-      raise RuntimeError, "Missing configuration" if Options.github.nil?
-      raise RuntimeError, "Missing authentication token" if Options.github.token.nil?
-      raise RuntimeError, "No repositories provided" if Options.github.repos.empty?
+      raise RuntimeError, "Missing configuration file"   if Options.nil?
+      raise RuntimeError, "Missing authentication token" if Options.token.nil?
+      raise RuntimeError, "No repositories provided"     if Options.repos.empty?
     end
 
     def self.parse(argv_opts = [], unit_testing = false)
