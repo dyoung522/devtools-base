@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+lib = File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require "devtools"
+require "octokit"
+require "pp"
+require "qa_queue"
+
+module QAqueue
+  pull_requests = PullRequests.new
+
+  OptParse.parse(ARGV)
+
+  github = Octokit::Client.new(access_token: Options.github.token)
+
+  Options.github.labels
+  Options.github.repos.each do |repo|
+    %w(ready queued).each do |state|
+      Options.github.labels[state].each do |label|
+        pull_requests.add github.issues(repo, labels: github.label(repo, label).name),
+                          { label: label, repo: repo, state: state }
+      end
+    end
+  end
+
+  puts "QA Queue for #{pull_requests.repos.join(", ")}\n\n" if Options.verbose > 1
+
+  pull_requests.by_date do |pr|
+    printf "- PR #%d (%s) %s ", pr.number, pr.repo, pr.title
+    printf "*READY FOR QA*" if pr.state == 'ready'
+    puts
+  end
+end

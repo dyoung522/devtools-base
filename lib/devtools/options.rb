@@ -9,7 +9,11 @@ module DevTools
 
     def initialize(opts)
       program_path  = DevTools::PROGRAM
-      program_files = %W(~/.#{program_path} ./.#{program_path} ./#{program_path}.conf ./#{program_path}.rc)
+      program_files = []
+
+      %W(~/.#{program_path} ./.#{program_path} ./#{program_path}.conf ./#{program_path}.rc).each do |path|
+        program_files.push File.expand_path(path)
+      end
 
       Config.setup do |config|
         config.const_name = 'Options'
@@ -20,7 +24,8 @@ module DevTools
 
       default_options(Options, opts[:defaults]) if opts[:defaults]
 
-      Options.verbose = 0 if Options.verbose.nil?
+      Options.verbose = Options.verbose ? 1 : 0 unless Options.verbose.is_a?(Numeric)
+      Options.debug   = true if Options.verbose >= 5
 
       @parser  ||= common_options opts[:testing]
       @version ||= sprintf "%s v%s (%s v%s)\n",
