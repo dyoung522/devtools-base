@@ -1,6 +1,6 @@
-![Build Status](https://travis-ci.org/dyoung522/devtools.svg)
-![Code Climate](https://codeclimate.com/github/dyoung522/devtools/badges/gpa.svg)
-![Test Coverage](https://codeclimate.com/github/dyoung522/devtools/badges/coverage.svg)
+[![Build Status](https://travis-ci.org/dyoung522/devtools.svg?branch=master)](https://travis-ci.org/dyoung522/devtools)
+[![Code Climate](https://codeclimate.com/github/dyoung522/devtools/badges/gpa.svg)](https://codeclimate.com/github/dyoung522/devtools)
+[![Test Coverage](https://codeclimate.com/github/dyoung522/devtools/badges/coverage.svg)](https://codeclimate.com/github/dyoung522/devtools/coverage)
 
 # DevTools
 
@@ -17,12 +17,12 @@ Install it from the command line
 Once installed, this gem provides several, mostly independent, utilities
 
 - `runtest` : Runs test suites with an optional search pattern
-- `jdiff` : Compares two git branches and shows a diff of JIRA stories
+- `jdiff`   t co: Compares two git branches and shows a diff of JIRA stories
+- `prlist`  : Polls git repos and displays a queue of stories ready for QA
 
 Future Development
 
 - RunEnv  : Starts and manages a development environment
-- QA Queue (qaq) : polls git repos and displays a queue of stories ready for QA
 
 ## Development
 

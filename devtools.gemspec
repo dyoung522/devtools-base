@@ -11,7 +11,8 @@ Gem::Specification.new do |spec|
 
   spec.summary     = %q{Miscellaneous utilities to make a developers life easier}
   spec.description = %q{Utilities include:\nRunTest - Runs specs based on local configuration} +
-                     %q{\nRunEnv  - Run the dev environment based on local configuration}
+                     %q{\nRunEnv  - Run the dev environment based on local configuration} +
+                     %q{\nPRlist  - Polls git repos and displays a queue of stories ready for QA}
   spec.homepage    = "https://github.com/dyoung522/devtools"
   spec.license     = "MIT"
 
