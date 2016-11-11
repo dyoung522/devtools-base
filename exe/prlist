@@ -28,14 +28,12 @@ module DevTools
 
     Options.repos.each { |repo| pull_requests.load!(repo) }
 
-    puts "QA Queue for #{pull_requests.repos.join(", ")}\n\n" if Options.verbose > 1
+    puts "QA Queue for #{pull_requests.repos.join(", ")}\n\n" if Options.verbose > 0
 
     pull_requests.by_date do |pr|
-      printf "- PR #%d (%s) %s", pr.number, pr.repo, pr.title
+      printf "- PR #%d (%s) %s", pr.number, Options.verbose > 1 ? pr.repo : pr.repo(short: true), pr.title
       printf " (labels: %s)", pr.labels.join(", ") if Options.verbose > 2
       puts
     end
-
-    puts pull_requests.pulls.to_yaml
   end
 end

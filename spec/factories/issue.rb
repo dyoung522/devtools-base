@@ -1,5 +1,9 @@
 class Issue
   attr_accessor :created_at, :labels, :number, :repository_url, :title
+
+  def pull_request?
+    true
+  end
 end
 
 class Label

@@ -4,7 +4,7 @@ module DevTools
 
       def self.default_options
         {
-          verbose: 1,
+          verbose: 0,
           queue: false
         }
       end

@@ -2,9 +2,9 @@ require "octokit"
 
 module DevTools
   module PRlist
-    attr_reader :issue
-
     class PullRequest
+      attr_reader :issue
+
       def initialize(issue)
         @issue ||= issue
       end
@@ -25,8 +25,8 @@ module DevTools
         @issue.labels.map { |l| l.name }
       end
 
-      def repo(full = false)
-        /repos\/(\w*\/?(.*))$/.match(@issue.repository_url)[full ? 1 : 2]
+      def repo(short = false)
+        /repos\/(\w*\/?(.*))$/.match(@issue.repository_url)[short ? 2 : 1]
       end
     end
 
@@ -35,18 +35,18 @@ module DevTools
 
       def initialize(token = nil)
         @pulls  ||= []
-        @github ||= __authenticate(token)
+        @github ||= __authenticate token
       end
 
       def auth!(token)
-        @github = __authenticate(token)
+        @github = __authenticate token
       end
 
       def load!(repo)
         raise NoAuthError, "You must authorized with github using #auth first" unless @github
 
         @github.issues(repo).each do |issue|
-          @pulls.push PullRequest.new issue if (issue.pull_request && issue.pull_request.url)
+          __load_issue issue if issue.pull_request?
         end
       end
 
@@ -61,6 +61,10 @@ module DevTools
       end
 
       private
+
+      def __load_issue(issue)
+        @pulls.push PullRequest.new issue
+      end
 
       def __authenticate(token)
         token ? Octokit::Client.new(access_token: token) : nil
