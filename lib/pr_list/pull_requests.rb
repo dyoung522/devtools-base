@@ -5,6 +5,14 @@ module DevTools
     class PullRequest
       attr_reader :issue
 
+      def method_missing(method_sym, *arguments, &block)
+        @issue.respond_to?(method_sym) ? @issue.send(method_sym, *arguments, &block) : super
+      end
+
+      def respond_to_missing?(method_name, include_private = false)
+        @issue.respond_to?(method_name.to_sym) || super
+      end
+
       def initialize(issue)
         @issue ||= issue
       end
@@ -13,12 +21,8 @@ module DevTools
         @issue.created_at
       end
 
-      def number
-        @issue.number
-      end
-
-      def title
-        @issue.title
+      def has_label?(filter_by)
+        labels.any? { |label| [filter_by].flatten.map{ |l| l.downcase.strip }.include?(label.downcase.strip) }
       end
 
       def labels

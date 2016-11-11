@@ -18,6 +18,18 @@ module DevTools
       describe OptParse do
         let (:options) { OptParse.parse([], true) }
 
+        context "#label_values" do
+          it "should be valid" do
+            expect(OptParse).to respond_to(:label_values)
+          end
+
+          it "should return a flattened Array" do
+            allow(Options).to receive(:labels) { { one: 1, two: [2, 3], three: nil, four: 4 } }
+            expect(OptParse.label_values).to be_an(Array)
+            expect(OptParse.label_values).to eq([1, 2, 3, 4])
+          end
+        end
+
         context "--queue" do
           it "should be valid" do
             my_options = nil
@@ -54,23 +66,50 @@ module DevTools
         let (:pull_request) { PullRequest.new issue }
 
         it "should have a valid date method" do
+          expect(pull_request).to respond_to(:date)
           expect(pull_request.date).not_to be nil
           expect(pull_request.date).to eq(issue.created_at)
         end
 
         it "should have a valid labels method" do
+          expect(pull_request).to respond_to(:labels)
           expect(pull_request.labels).not_to be nil
-          expect(pull_request.labels).to be_a(Array)
+          expect(pull_request.labels).to be_an(Array)
         end
 
-        it "should have a valid number method" do
-          expect(pull_request.number).not_to be nil
-          expect(pull_request.number).to eq(issue.number)
+        context "should defer to issue methods" do
+          it "#pull_request?" do
+            expect(pull_request).to respond_to(:pull_request?)
+            expect(pull_request.pull_request?).to be true
+          end
+
+          it "#number" do
+            expect(pull_request).to respond_to(:number)
+            expect(pull_request.number).to eq(issue.number)
+          end
+
+          it "#title" do
+            expect(pull_request).to respond_to(:title)
+            expect(pull_request.title).to eq(issue.title)
+          end
         end
 
-        it "should have a valid title method" do
-          expect(pull_request.title).not_to be nil
-          expect(pull_request.title).to eq(issue.title)
+        context "#has_label?" do
+          it "should be valid" do
+            expect(pull_request).to respond_to(:has_label?)
+          end
+
+          it "should accept and match a String" do
+            expect(pull_request.has_label?("Please Review")).to be true
+          end
+
+          it "should accept and match an Array" do
+            expect(pull_request.has_label?(["Please Review"])).to be true
+          end
+
+          it "should accept match multiple values and mixed case" do
+            expect(pull_request.has_label?(["foo", "bar", "PLEASE REVIEW ", "baz"])).to be true
+          end
         end
 
         context "#repo" do

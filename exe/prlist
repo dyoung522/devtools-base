@@ -29,9 +29,11 @@ module DevTools
     puts "QA Queue for #{pull_requests.repos.join(", ")}\n\n" if Options.verbose > 0
 
     pull_requests.by_date do |pr|
+      next unless pr.has_label?(OptParse.label_values) if Options.queue
+
       printf "%sPR #%s (%s) %s",
              Options.markdown ? "- " : "",
-             Options.markdown ? "[#{pr.number}](#{pr.issue.pull_request.html_url})" : pr.number,
+             Options.markdown ? "[#{pr.number}](#{pr.pull_request.html_url})" : pr.number,
              Options.verbose > 1 ? pr.repo : pr.repo(short: true),
              pr.title
       printf " (labels: %s)", pr.labels.join(", ") if Options.verbose > 2

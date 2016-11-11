@@ -1,3 +1,4 @@
+
 module DevTools
   module PRlist
     class OptParse
@@ -5,7 +6,7 @@ module DevTools
       def self.default_options
         {
           markdown: false,
-          queue: false
+          queue:    false
         }
       end
 
@@ -46,6 +47,9 @@ module DevTools
         Options
       end
 
+      def self.label_values
+        Options.labels.keys.map { |k| Options.labels[k] }.flatten.compact
+      end
     end
   end
 end
