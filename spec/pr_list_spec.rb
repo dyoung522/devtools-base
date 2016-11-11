@@ -38,6 +38,15 @@ module DevTools
           end
         end
 
+        context "--markdown" do
+          it "should be valid" do
+            my_options = nil
+
+            expect { my_options = OptParse.parse(%w(--markdown), true) }.not_to raise_error
+            expect(my_options.markdown).to be true # can be set
+          end
+        end
+
       end
 
       describe PullRequest do
@@ -70,7 +79,7 @@ module DevTools
           end
 
           it "should return the short repository name when requested" do
-            expect(pull_request.repo(true)).to eq(repo_short)
+            expect(pull_request.repo(short: true)).to eq(repo_short)
           end
         end
       end
@@ -86,10 +95,23 @@ module DevTools
           allow(github).to receive(:issues) { [issue1, issue2] }
         end
 
-        it "should (re-)authenticate with #auth!" do
-          pull_requests.auth!("123456789")
+        context "#auth!" do
+          it "should (re-)authenticate" do
+            pull_requests.auth!("foobarbazbat")
 
-          expect(Octokit::Client).to have_received(:new).with(hash_including(:access_token => 123456789))
+            expect(Octokit::Client).to have_received(:new).with(hash_including(:access_token => "foobarbazbat"))
+          end
+        end
+
+        context "#authorized?" do
+          it "should respond true when authorized" do
+            expect(pull_requests.authorized?).to be true
+          end
+
+          it "should respond false when not authorized" do
+            allow(Octokit::Client).to receive(:new) { nil }
+            expect(pull_requests.authorized?).to be false
+          end
         end
 
         context "#load!" do

@@ -4,7 +4,7 @@ module DevTools
 
       def self.default_options
         {
-          verbose: 0,
+          markdown: false,
           queue: false
         }
       end
@@ -27,6 +27,10 @@ module DevTools
 
         parser.separator ""
         parser.separator "[OPTIONS]"
+
+        parser.on "-m", "--markdown", "Outputs in markdown friendly format" do
+          Options.markdown = true
+        end
 
         parser.on "--[no-]queue", "filters PRs into a queue list for QA (default)" do |opt|
           Options.queue = opt

@@ -24,14 +24,16 @@ module DevTools
       exit 1
     end
 
-    pull_requests = PullRequests.new(Options.token)
-
-    Options.repos.each { |repo| pull_requests.load!(repo) }
+    pull_requests = PullRequests.new Options.token, Options.repos
 
     puts "QA Queue for #{pull_requests.repos.join(", ")}\n\n" if Options.verbose > 0
 
     pull_requests.by_date do |pr|
-      printf "- PR #%d (%s) %s", pr.number, Options.verbose > 1 ? pr.repo : pr.repo(short: true), pr.title
+      printf "%sPR #%s (%s) %s",
+             Options.markdown ? "- " : "",
+             Options.markdown ? "[#{pr.number}](#{pr.issue.pull_request.html_url})" : pr.number,
+             Options.verbose > 1 ? pr.repo : pr.repo(short: true),
+             pr.title
       printf " (labels: %s)", pr.labels.join(", ") if Options.verbose > 2
       puts
     end

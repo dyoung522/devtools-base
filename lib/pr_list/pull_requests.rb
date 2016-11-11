@@ -25,17 +25,25 @@ module DevTools
         @issue.labels.map { |l| l.name }
       end
 
-      def repo(short = false)
-        /repos\/(\w*\/?(.*))$/.match(@issue.repository_url)[short ? 2 : 1]
+      def repo(opt = {})
+        opt[:short] = false unless opt.has_key?(:short)
+
+        /repos\/(\w*\/?(.*))$/.match(@issue.repository_url)[opt[:short] ? 2 : 1]
       end
     end
 
     class PullRequests
       attr_reader :pulls
 
-      def initialize(token = nil)
+      def initialize(token = nil, repos = [])
         @pulls  ||= []
         @github ||= __authenticate token
+
+        repos.each { |repo| load!(repo) } if authorized?
+      end
+
+      def authorized?
+        return !@github.nil?
       end
 
       def auth!(token)
@@ -43,7 +51,7 @@ module DevTools
       end
 
       def load!(repo)
-        raise NoAuthError, "You must authorized with github using #auth first" unless @github
+        raise NoAuthError, "You must authorized with github using #auth first" unless authorized?
 
         @github.issues(repo).each do |issue|
           __load_issue issue if issue.pull_request?
