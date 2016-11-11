@@ -4,15 +4,15 @@ require "devtools"
 module DevTools
   describe DevTools do
     it "has a version number" do
-      expect(DevTools::VERSION).not_to be nil
+      expect(VERSION).not_to be nil
     end
 
     it "has a program name" do
-      expect(DevTools::PROGRAM).not_to be nil
+      expect(PROGRAM).not_to be nil
     end
 
     context OptParse do
-      let (:options_parser) { DevTools::OptParse.new({ name: "test", version: "0.0.0" }, true) }
+      let (:options_parser) { OptParse.new({ name: "test", version: "0.0.0", testing: true }) }
 
       it "should have a valid --config command" do
         expect { options_parser.parser.parse(%w(--config spec/spec_config.yml)) }.not_to raise_error

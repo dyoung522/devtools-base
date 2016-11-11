@@ -12,13 +12,13 @@ module JIRADiff
     end
 
     describe OptParse do
-      let (:options) { JIRADiff::OptParse.parse([], true) }
+      let (:options) { OptParse.parse([], true) }
 
       context "--master" do
         it "should be valid" do
           my_options = nil
 
-          expect { my_options = JIRADiff::OptParse.parse(%w(--master foo), true) }.not_to raise_error
+          expect { my_options = OptParse.parse(%w(--master foo), true) }.not_to raise_error
           expect(my_options.master).to eq("foo")
         end
 
@@ -31,7 +31,7 @@ module JIRADiff
         it "should be valid" do
           my_options = nil
 
-          expect { my_options = JIRADiff::OptParse.parse(%w(--source foo), true) }.not_to raise_error
+          expect { my_options = OptParse.parse(%w(--source foo), true) }.not_to raise_error
           expect(my_options.source).to eq(%w(foo))
         end
 
@@ -40,7 +40,7 @@ module JIRADiff
         end
 
         it "should allow multiple values" do
-          expect(JIRADiff::OptParse.parse(%w(--source foo --source bar), true).source).to eq(%w(foo bar))
+          expect(OptParse.parse(%w(--source foo --source bar), true).source).to eq(%w(foo bar))
         end
       end
 
@@ -48,7 +48,7 @@ module JIRADiff
         it "should be valid" do
           my_options = nil
 
-          expect { my_options = JIRADiff::OptParse.parse(%w(--directory spec), true) }.not_to raise_error
+          expect { my_options = OptParse.parse(%w(--directory spec), true) }.not_to raise_error
           expect(my_options.directory).to match("devtools/spec")
         end
 
@@ -57,7 +57,7 @@ module JIRADiff
         end
 
         it "should require a valid directory" do
-          expect { JIRADiff::OptParse.parse(%w(--directory foo), true) }.to raise_error(ArgumentError)
+          expect { OptParse.parse(%w(--directory foo), true) }.to raise_error(ArgumentError)
         end
       end
 

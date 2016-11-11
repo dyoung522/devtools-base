@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary     = %q{Miscellaneous utilities to make a developers life easier}
   spec.description = %q{Utilities include:\nRunTest - Runs specs based on local configuration} +
-    %q{\nRunEnv  - Run the dev environment based on local configuration}
+                     %q{\nRunEnv  - Run the dev environment based on local configuration}
   spec.homepage    = "https://github.com/dyoung522/devtools"
   spec.license     = "MIT"
 
@@ -21,9 +21,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "config", "~> 1.3"
+  spec.add_dependency "octokit", "~> 4.0"
 
   spec.add_development_dependency "bundler", "~> 1.13"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry", "~> 0.4"
+  spec.add_development_dependency "factory_girl", "~> 4.0"
 end
