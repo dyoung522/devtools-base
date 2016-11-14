@@ -10,7 +10,7 @@ DevTools is a compilation of utilities created to make the development process e
 
 Install it from the command line
 
-    $ gem install devtools
+    $ gem install ora-dev-tools
 
 ## Usage
 
@@ -32,8 +32,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/dyoung522/devtools.
-
+Bug reports and pull requests are welcome on [our GitHub page](https://github.com/dyoung522/devtools)
 
 ## License
 
