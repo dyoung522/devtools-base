@@ -31,9 +31,9 @@ module DevTools
     pull_requests.by_date do |pr|
       next unless pr.has_label?(OptParse.label_values) if Options.queue
 
-      printf "%sPR #%s (%s) %s",
+      printf "%s%s (%s) %s",
              Options.markdown ? "- " : "",
-             Options.markdown ? "[#{pr.number}](#{pr.pull_request.html_url})" : pr.number,
+             Options.markdown ? "[PR ##{pr.number}](#{pr.pull_request.html_url})" : "PR ##{pr.number}",
              Options.verbose > 1 ? pr.repo : pr.repo(short: true),
              pr.title
       printf " (labels: %s)", pr.labels.join(", ") if Options.verbose > 2

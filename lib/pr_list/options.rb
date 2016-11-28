@@ -33,7 +33,7 @@ module DevTools
           Options.markdown = true
         end
 
-        parser.on "--[no-]queue", "filters PRs into a queue list for QA (default)" do |opt|
+        parser.on "--[no-]queue", "filters PRs into a queue list for QA" do |opt|
           Options.queue = opt
         end
 
