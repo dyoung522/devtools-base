@@ -5,5 +5,5 @@ group :test do
   gem "codeclimate-test-reporter", "~> 1.0.0"
 end
 
-# Specify your gem's dependencies in devtools.gemspec
+# Specify your gem's dependencies in ora-dev-tools.gemspec
 gemspec

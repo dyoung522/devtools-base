@@ -32,7 +32,7 @@ module DevTools
       next unless pr.has_label?(OptParse.label_values) if Options.queue
 
       printf "%s%s (%s) %s",
-             Options.markdown ? "- " : "",
+             Options.markdown ? "1. " : "",
              Options.markdown ? "[PR ##{pr.number}](#{pr.pull_request.html_url})" : "PR ##{pr.number}",
              Options.verbose > 1 ? pr.repo : pr.repo(short: true),
              pr.title
