@@ -16,7 +16,7 @@ module JIRADiff
     end
 
     def branch_valid?(branch)
-      run_command("\\git branch --list #{branch}")[0] =~ /#{branch}/
+      run_command("\\git branch --all --list #{branch}")[0] =~ /#{branch}/
     end
 
     private

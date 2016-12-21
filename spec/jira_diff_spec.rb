@@ -49,7 +49,7 @@ module JIRADiff
           my_options = nil
 
           expect { my_options = OptParse.parse(%w(--directory spec), true) }.not_to raise_error
-          expect(my_options.directory).to match("devtools/spec")
+          expect(my_options.directory).to match("#{Dir.pwd}/spec")
         end
 
         it "should default to ." do

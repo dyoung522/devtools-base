@@ -1,4 +1,4 @@
 module DevTools
   PROGRAM = File.basename($0, ".rb")
-  VERSION = "1.2.3-dev"
+  VERSION = "1.2.4-dev"
 end
