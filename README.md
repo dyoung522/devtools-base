@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/dyoung522/devtools.svg?branch=master)](https://travis-ci.org/dyoung522/devtools)
-[![Code Climate](https://codeclimate.com/github/dyoung522/devtools/badges/gpa.svg)](https://codeclimate.com/github/dyoung522/devtools)
-[![Test Coverage](https://codeclimate.com/github/dyoung522/devtools/badges/coverage.svg)](https://codeclimate.com/github/dyoung522/devtools/coverage)
+[![Build Status](https://travis-ci.org/dyoung522/devtools-base.svg?branch=master)](https://travis-ci.org/dyoung522/devtools-base)
+[![Code Climate](https://codeclimate.com/github/dyoung522/devtools-base/badges/gpa.svg)](https://codeclimate.com/github/dyoung522/devtools-base)
+[![Test Coverage](https://codeclimate.com/github/dyoung522/devtools-base/badges/coverage.svg)](https://codeclimate.com/github/dyoung522/devtools-base/coverage)
 
-# DevTools
+# DevTools (Base)
 
 DevTools is a compilation of utilities created to make the development process easier.
 
