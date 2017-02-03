@@ -8,21 +8,29 @@ DevTools is a compilation of utilities created to make the development process e
 
 ## Installation
 
-Install it from the command line
+The base class is intended to be required in other tools via
 
-    $ gem install ora-dev-tools
+    require "devtools-base"
 
 ## Usage
 
-Once installed, this gem provides several, mostly independent, utilities
+Once installed, this gem provides a base for several, mostly independent, utilities.
 
-- `runtest` : Runs test suites with an optional search pattern
-- `jdiff`   t co: Compares two git branches and shows a diff of JIRA stories
-- `prlist`  : Polls git repos and displays a queue of stories ready for QA
+It gives you command line support, which includes the following options:
 
-Future Development
+- `--help    | -h` : Command line help
+- `--config  | -c <FILE>` : Include tools-specific options from config FILE
+- `--version | -v` : Print version information and exit
 
-- RunEnv  : Starts and manages a development environment
+Additionally, the base will look for and load (if found) tool specific
+configuration items from one of the following files:
+ 
+- `~/.toolname`
+- `./.toolname`
+- `./toolname.rc`
+- `./toolname.conf`
+
+Where `toolname` is the name of the executable using this base.
 
 ## Development
 
@@ -32,7 +40,7 @@ To install this gem onto your local machine, run `bundle exec rake install`.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on [our GitHub page](https://github.com/dyoung522/devtools)
+Bug reports and pull requests are welcome on [our GitHub page](https://github.com/dyoung522/devtools-base)
 
 ## License
 

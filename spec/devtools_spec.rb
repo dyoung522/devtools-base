@@ -39,5 +39,23 @@ module DevTools
         expect { options_parser.parser.parse(%w(--version)) }.not_to raise_error
       end
     end
+
+    context Utils do
+      describe "#die" do
+        let (:test_message) { "this is a test exit message" }
+
+        it "should print a message to STDOUT" do
+          expect {
+            begin Utils.die(test_message)
+            rescue SystemExit
+            end
+          }.to output(test_message + "\n").to_stdout # or .to_stderr
+        end
+
+        it "should exit" do
+          expect { capture_stdout { Utils.die(test_message) } }.to raise_error SystemExit
+        end
+      end
+    end
   end
 end

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "devtools/version"
 
 Gem::Specification.new do |spec|
-  spec.name    = "ora-dev-tools"
+  spec.name    = "devtools-base"
   spec.version = DevTools::VERSION
   spec.authors = ["Donovan Young"]
   spec.email   = ["dyoung522@gmail.com"]
@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.description = %q{Utilities include:\nRunTest - Runs specs based on local configuration} +
                      %q{\nRunEnv  - Run the dev environment based on local configuration} +
                      %q{\nPRlist  - Polls git repos and displays a queue of stories ready for QA}
-  spec.homepage    = "https://github.com/dyoung522/devtools"
+  spec.homepage    = "https://github.com/dyoung522/devtools-base"
   spec.license     = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -28,5 +28,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "pry", "~> 0.4"
-  spec.add_development_dependency "factory_girl", "~> 4.0"
 end

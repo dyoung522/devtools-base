@@ -1,7 +1,5 @@
 require "config"
 require "optparse"
-require "ostruct"
-require "pp"
 
 module DevTools
   class OptParse
